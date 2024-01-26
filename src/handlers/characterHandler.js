@@ -38,9 +38,9 @@ module.exports = {
         }
     },
     createChar: (req, res) => {
-        const { name, job, hobbies } = req.body;
+        const { name, status, species, gender, origin, image } = req.body;
         try {
-            let charCreate = postChar(name, job, hobbies)
+            let charCreate = postChar(name, status, species, gender, origin, image)
             res.status(200).json(charCreate)
         } catch (error) {
             res.status(400).json({ error: error.message })

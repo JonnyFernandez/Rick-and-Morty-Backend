@@ -1,12 +1,17 @@
 
+
+
 const charHandler = require('../handlers/characterHandler')
 const Router = require('express')
+const { postCharSchema } = require('../schemas/char.schema')
+const validateSchema = require('../middlewares/validator.Middleware')
+const validateToken = require('../middlewares/validateToken')
 const character = Router()
 
 character.get('/', [charHandler.getChar])
 character.get('/:id', [charHandler.getCharById])
 character.put('/:id', [charHandler.updateChar])
-character.post('/', [charHandler.createChar])
+character.post('/', validateSchema(postCharSchema), [validateToken.authRequire], [charHandler.createChar])
 character.delete('/:id', [charHandler.removeChar])
 
 

@@ -25,14 +25,15 @@ module.exports = {
 
     },
     api_pages: async (page) => {
+        //paginado cada 20 pages
         const char = await axios(`https://rickandmortyapi.com/api/character/?page=${page}`)
         console.log(char.data);
     },
     all_character: () => {
         return "toods los char"
     },
-    character_by_name: (name) => {
-        return `buscaria en la api y en la db un characters con el nombre ${name}`
+    character_by_name: async (name) => {
+        const char = await axios(`https://rickandmortyapi.com/api/character/?name=${name}`)
     },
     charFrom_DB: (id) => {
         return `busco un char con id: ${id} en la DB`
@@ -41,7 +42,7 @@ module.exports = {
         return `busco un char con id: ${id} en la API`
 
     },
-    postChar: (name, job, hobbies) => {
+    postChar: (name, status, species, gender, origin, image) => {
         return `creamos char${job}, y le cambia el nombre a ${name}, ${hobbies}`
     },
     Detele_character: (id) => {

@@ -1,13 +1,13 @@
-const { getChar, getCharById, updateChar, createChar, removeChar } = require('../handlers/characterHandler')
 
+const charHandler = require('../handlers/characterHandler')
 const Router = require('express')
 const character = Router()
 
-character.get('/', getChar)
-character.get('/:id', getCharById)
-character.put('/:id', updateChar)
-character.post('/', createChar)
-character.delete('/:id', removeChar)
+character.get('/', [charHandler.getChar])
+character.get('/:id', [charHandler.getCharById])
+character.put('/:id', [charHandler.updateChar])
+character.post('/', [charHandler.createChar])
+character.delete('/:id', [charHandler.removeChar])
 
 
 

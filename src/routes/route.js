@@ -7,7 +7,7 @@ const character = require('../routes/character.routes')
 
 const route = Router()
 
-route.use('/character', character)
+route.use('/char', character)
 route.use('/auth', auth)
 
 

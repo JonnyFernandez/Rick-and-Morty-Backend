@@ -13,13 +13,19 @@ const charSchema = new mongoose.Schema({
         enum: ['vivo', 'muerto', 'desconocido'] // Valores permitidos
     },
     species: {
-        type: [String],
+        type: String,
         require: true,
         trim: true,
         enum: ['Humano', 'Alien', 'Robot'],
     },
+    // species: {
+    //     type: [String],
+    //     require: true,
+    //     trim: true,
+    //     enum: ['Humano', 'Alien', 'Robot'],
+    // },
     gender: {
-        type: [String],
+        type: String,
         require: true,
         enum: ['Male', 'Female', 'Unknow'],
     },

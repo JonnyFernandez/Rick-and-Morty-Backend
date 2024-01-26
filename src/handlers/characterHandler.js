@@ -10,9 +10,10 @@ const control = require('../controllers/characterCtrl.js')
 module.exports = {
     getChar: async (req, res) => {
         const { name } = req.query;
+
         try {
-            const char = await control.api()
-            // let char = name ? await control.character_by_name(name) : await control.all_character()
+            const char = await control.api(name, req.user.id)
+
             res.status(200).json(char)
         } catch (error) {
             res.status(400).json({ error: error.message })

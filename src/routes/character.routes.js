@@ -11,7 +11,7 @@ const character = Router()
 character.get('/', [charHandler.getChar])
 character.get('/:id', [charHandler.getCharById])
 character.put('/:id', [charHandler.updateChar])
-character.post('/', validateSchema(postCharSchema), [validateToken.authRequire], [charHandler.createChar])
+character.post('/', [validateToken.authRequire], validateSchema(postCharSchema), [charHandler.createChar])
 character.delete('/:id', [charHandler.removeChar])
 
 

@@ -12,7 +12,7 @@ module.exports = {
         const { name } = req.query;
         try {
             const char = await control.api()
-            // let char = name ? character_by_name(name) : all_character()
+            // let char = name ? await control.character_by_name(name) : await control.all_character()
             res.status(200).json(char)
         } catch (error) {
             res.status(400).json({ error: error.message })
@@ -37,10 +37,11 @@ module.exports = {
             res.status(400).json({ error: error.message })
         }
     },
-    createChar: (req, res) => {
+    createChar: async (req, res) => {
         const { name, status, species, gender, origin, image } = req.body;
+        const user = req.user.id
         try {
-            let charCreate = postChar(name, status, species, gender, origin, image)
+            let charCreate = await control.postChar(name, status, species, gender, origin, image, user)
             res.status(200).json(charCreate)
         } catch (error) {
             res.status(400).json({ error: error.message })

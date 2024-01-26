@@ -1,9 +1,10 @@
 const axios = require('axios')
 const Char = require('../models/char.model')
-
+const { ObjectId } = require('mongodb');
 
 module.exports = {
     getChar: async (name, userId) => {
+        console.log(userId);
         if (name) {
             const searchName = name;
             const regex = new RegExp(searchName, 'i');
@@ -80,15 +81,6 @@ module.exports = {
 
 
     },
-    db: () => {
-        return [{}, {}]
-    },
-    api_pages: async (page) => {
-        //paginado cada 20 pages
-        const char = await axios(`https://rickandmortyapi.com/api/character/?page=${page}`)
-        console.log(char.data);
-    },
-
     postChar: async (name, status, species, gender, origin, image, user) => {
         const charFound = await Char.findOne({ name })
         if (charFound) throw new Error('the character already exist')
@@ -96,13 +88,39 @@ module.exports = {
         const saveChar = await newChar.save()
         return saveChar;
     },
+    update_character: async (id, data, userId) => {
+        if (isNaN(id)) {
+            const auxFound = await Char.findById(id);
+            const userObjectId = new ObjectId(userId);
+            const idString = auxFound.user;
+
+            if (userObjectId.equals(idString)) {
+                const char = await Char.findByIdAndUpdate(id, data, { new: true });
+                if (!char) {
+                    throw new Error('Character not found');
+                }
+                return char;
+            } else {
+                throw new Error('You did not create this character, so you cannot update it.');
+            }
+        } else {
+            throw new Error('You cannot update characters that you did not create.');
+        }
+    },
+
+
     Detele_character: (id) => {
         return `Buscar en char con id: ${id}, y lo elimina`
     },
-    update_character: (id, name) => {
-        return `buscaria un char id ${id}, y le cambia el nombre a ${name}`
+
+
+    api_pages: async (page) => {
+        //paginado cada 20 pages
+        const char = await axios(`https://rickandmortyapi.com/api/character/?page=${page}`)
+        console.log(char.data);
     },
-
-
+    db: () => {
+        return [{}, {}]
+    },
 }
 

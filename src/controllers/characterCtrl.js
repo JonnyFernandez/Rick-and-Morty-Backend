@@ -3,7 +3,7 @@ const Char = require('../models/char.model')
 
 
 module.exports = {
-    api: async (name, userId) => {
+    getChar: async (name, userId) => {
         if (name) {
             const searchName = name;
             const regex = new RegExp(searchName, 'i');
@@ -48,6 +48,38 @@ module.exports = {
             });
         }
     },
+    getChar_by_id: async (id) => {
+        if (isNaN(id)) {
+            const res = await Char.findById(id).populate('user')
+            return {
+                id: res._id,
+                name: res.name,
+                status: res.status,
+                species: res.species,
+                gender: res.gender,
+                origin: res.origin,
+                image: res.image,
+                user: res.user._id
+            }
+        } else {
+            const aux = await axios(`https://rickandmortyapi.com/api/character/${id}`)
+            if (!aux) throw new Error('id not found')
+            return {
+                id: aux.data.id,
+                name: aux.data.name,
+                status: aux.data.status,
+                species: aux.data.species,
+                gender: aux.data.gender,
+                origin: aux.data.origin.name,
+                image: aux.data.image,
+                user: null
+            }
+
+
+        }
+
+
+    },
     db: () => {
         return [{}, {}]
     },
@@ -56,23 +88,7 @@ module.exports = {
         const char = await axios(`https://rickandmortyapi.com/api/character/?page=${page}`)
         console.log(char.data);
     },
-    all_character: async () => {
-        const apiInfo = await this.api()
-        const dbInfo = this.db
 
-        return apiInfo
-    },
-    character_by_name: async (name) => {
-        const char = await axios(`https://rickandmortyapi.com/api/character/?name=${name}`)
-        return "hola"
-    },
-    charFrom_DB: (id) => {
-        return `busco un char con id: ${id} en la DB`
-    },
-    charFrom_API: (id) => {
-        return `busco un char con id: ${id} en la API`
-
-    },
     postChar: async (name, status, species, gender, origin, image, user) => {
         const charFound = await Char.findOne({ name })
         if (charFound) throw new Error('the character already exist')

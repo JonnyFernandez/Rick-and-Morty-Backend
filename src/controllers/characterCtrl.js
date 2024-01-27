@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb');
 
 module.exports = {
     getChar: async (name, userId) => {
-        console.log(userId);
+
         if (name) {
             const searchName = name;
             const regex = new RegExp(searchName, 'i');
@@ -25,8 +25,8 @@ module.exports = {
                         user: null
                     }
                 })
-
             }
+
         } else {
             const arr = []
             for (let i = 1; i < 6; i++) {
@@ -142,10 +142,6 @@ module.exports = {
             throw new Error('You cannot delete characters that you did not create.');
         }
     },
-
-
-
-
     paginate: async (page) => {
         if (page > 42) throw new Error('There are only 42 pages.')
         const char = await axios(`https://rickandmortyapi.com/api/character/?page=${page}`)
@@ -165,8 +161,49 @@ module.exports = {
         }
         return "You have no connection with rick and morty api"
     },
-    db: () => {
-        return [{}, {}]
+    db: async (userId) => {
+        const res = await Char.find({ user: userId }).populate('user')
+        return res.map(item => {
+            return {
+                id: item._id,
+                name: item.name,
+                status: item.status,
+                species: item.species,
+                gender: item.gender,
+                origin: item.origin,
+                image: item.image,
+                user: item.user._id
+            }
+        })
     },
-}
+    random: async (userId) => {
+        const arr = []
+        for (let i = 1; i < 6; i++) {
+            const info = await axios(`https://rickandmortyapi.com/api/character/?page=${i}`)
+            arr.push(info.data.results);
+        }
+        const charDB = await Char.find({ user: userId }).populate('user')
+        let aux = arr.concat(charDB).flat(5)
+
+        const getRandomNumber = () => Math.random() - 0.5;
+        const randomSortedArray = aux.sort(getRandomNumber);
+        const randomFiveArray = randomSortedArray.slice(0, 5);
+
+        return randomFiveArray.map(item => {
+            return {
+                id: item.id,
+                name: item.name,
+                status: item.status,
+                species: item.species,
+                gender: item.gender,
+                origin: item.origin.name,
+                image: item.image,
+                user: item.user ? item.user._id : null
+            }
+        });
+    }
+};
+
+
+
 

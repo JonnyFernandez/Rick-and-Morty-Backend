@@ -1,6 +1,6 @@
-
-
 const control = require('../controllers/characterCtrl.js')
+
+
 
 
 module.exports = {
@@ -58,5 +58,20 @@ module.exports = {
             res.status(400).json({ message: error.message })
         }
     },
-    myChar: async (req, res) => { res.send('mis char') }
+    myChar: async (req, res) => {
+        try {
+            const aux = await control.db(req.user.id)
+            res.status(200).json(aux)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    random: async (req, res) => {
+        try {
+            const randomChar = await control.random(req.user.id)
+            res.status(200).json(randomChar)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    }
 };

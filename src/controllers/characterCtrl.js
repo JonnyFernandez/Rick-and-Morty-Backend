@@ -108,8 +108,6 @@ module.exports = {
             throw new Error('You cannot update characters that you did not create.');
         }
     },
-
-
     remove: async (id, userId) => {
         if (isNaN(id)) {
             const auxFound = await Char.findById(id);
@@ -132,10 +130,26 @@ module.exports = {
     },
 
 
-    api_pages: async (page) => {
-        //paginado cada 20 pages
+
+
+    paginate: async (page) => {
+        if (page > 42) throw new Error('There are only 42 pages.')
         const char = await axios(`https://rickandmortyapi.com/api/character/?page=${page}`)
-        console.log(char.data);
+        if (char.data.results.length > 0) {
+            return char.data.results.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    status: item.status,
+                    species: item.species,
+                    gender: item.gender,
+                    origin: item.origin.name,
+                    image: item.image,
+                    user: null
+                }
+            })
+        }
+        return "You have no connection with rick and morty api"
     },
     db: () => {
         return [{}, {}]

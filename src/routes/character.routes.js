@@ -9,6 +9,8 @@ const validateToken = require('../middlewares/validateToken')
 const character = Router()
 
 character.get('/', [validateToken.authRequire], [charHandler.getChar])
+character.get('/paginate/:id', [validateToken.authRequire], [charHandler.paginate])
+character.get('/mychar', [validateToken.authRequire], [charHandler.myChar])
 character.get('/:id', [charHandler.getCharById])
 character.put('/:id', [validateToken.authRequire], [charHandler.updateChar])
 character.post('/', [validateToken.authRequire], validateSchema(postCharSchema), [charHandler.createChar])

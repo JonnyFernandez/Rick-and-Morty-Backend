@@ -1,5 +1,4 @@
-const update_character = require('../controllers/characterCtrl/updateChar')
-const Detele_character = require('../controllers/characterCtrl/delete')
+
 
 const control = require('../controllers/characterCtrl.js')
 
@@ -42,8 +41,6 @@ module.exports = {
             res.status(400).json({ message: error.message })
         }
     },
-
-
     removeChar: async (req, res) => {
         const { id } = req.params;
         try {
@@ -52,6 +49,14 @@ module.exports = {
         } catch (error) {
             res.status(400).json({ message: error.message })
         }
-    }
-
+    },
+    paginate: async (req, res) => {
+        try {
+            const aux = await control.paginate(req.params.id)
+            res.status(200).json(aux)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    myChar: async (req, res) => { res.send('mis char') }
 };

@@ -19,6 +19,8 @@
 - [morgan](https://www.npmjs.com/package/morgan)
 - [nodemon](https://www.npmjs.com/package/nodemon)
 - [zod](https://www.npmjs.com/package/zod)
+- [jest](https://jestjs.io/docs/getting-started)
+- [supertest](https://www.npmjs.com/package/supertest)
 
 
 </div>

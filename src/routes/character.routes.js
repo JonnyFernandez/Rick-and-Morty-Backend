@@ -1,8 +1,8 @@
 
 
 
-const charHandler = require('../handlers/characterHandler')
 const Router = require('express')
+const charHandler = require('../handlers/characterHandler')
 const { postCharSchema } = require('../schemas/char.schema')
 const validateSchema = require('../middlewares/validator.Middleware')
 const validateToken = require('../middlewares/validateToken')

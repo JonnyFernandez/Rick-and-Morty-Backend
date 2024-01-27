@@ -44,13 +44,13 @@ module.exports = {
     },
 
 
-    removeChar: (req, res) => {
+    removeChar: async (req, res) => {
         const { id } = req.params;
         try {
-            let charDelete = Detele_character(id)
-            res.status(200).json(charDelete)
+            let charUpdate = await control.remove(id, req.user.id)
+            res.status(200).json(charUpdate)
         } catch (error) {
-            res.status(400).json({ error: error.message })
+            res.status(400).json({ message: error.message })
         }
     }
 

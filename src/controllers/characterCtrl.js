@@ -91,6 +91,7 @@ module.exports = {
     update_character: async (id, data, userId) => {
         if (isNaN(id)) {
             const auxFound = await Char.findById(id);
+            if (!auxFound) throw new Error('character not exist')
             const userObjectId = new ObjectId(userId);
             const idString = auxFound.user;
 
@@ -109,8 +110,25 @@ module.exports = {
     },
 
 
-    Detele_character: (id) => {
-        return `Buscar en char con id: ${id}, y lo elimina`
+    remove: async (id, userId) => {
+        if (isNaN(id)) {
+            const auxFound = await Char.findById(id);
+            if (!auxFound) throw new Error('character not exist')
+            const userObjectId = new ObjectId(userId);
+            const idString = auxFound.user;
+
+            if (userObjectId.equals(idString)) {
+                const char = await Char.findByIdAndDelete(id);
+                if (!char) {
+                    throw new Error('Character not found');
+                }
+                return `${char.name} removed`;
+            } else {
+                throw new Error('You did not create this character, so you cannot remove it.');
+            }
+        } else {
+            throw new Error('You cannot delete characters that you did not create.');
+        }
     },
 
 

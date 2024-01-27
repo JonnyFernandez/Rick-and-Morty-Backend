@@ -16,7 +16,7 @@ module.exports = {
     getCharById: async (req, res) => {
         const { id } = req.params;
         try {
-            let charID = await control.getChar_by_id(id)
+            let charID = await control.getChar_by_id(id, req.user.id)
             res.status(200).json(charID)
         } catch (error) {
             res.status(400).json({ message: error.message })

@@ -49,19 +49,33 @@ module.exports = {
             });
         }
     },
-    getChar_by_id: async (id) => {
+    getChar_by_id: async (id, userId) => {
         if (isNaN(id)) {
-            const res = await Char.findById(id).populate('user')
-            return {
-                id: res._id,
-                name: res.name,
-                status: res.status,
-                species: res.species,
-                gender: res.gender,
-                origin: res.origin,
-                image: res.image,
-                user: res.user._id
+
+            const auxFound = await Char.findById(id);
+            if (!auxFound) throw new Error('character not exist')
+            const userObjectId = new ObjectId(userId);
+            const idString = auxFound.user;
+
+            if (userObjectId.equals(idString)) {
+                const res = await Char.findById(id).populate('user')
+                if (!res) throw new Error('Character not found');
+                return {
+                    id: res._id,
+                    name: res.name,
+                    status: res.status,
+                    species: res.species,
+                    gender: res.gender,
+                    origin: res.origin,
+                    image: res.image,
+                    user: res.user._id
+                };
+            } else {
+                throw new Error('You do not have access to this character.');
             }
+
+
+
         } else {
             const aux = await axios(`https://rickandmortyapi.com/api/character/${id}`)
             if (!aux) throw new Error('id not found')

@@ -10,7 +10,7 @@ const charSchema = new mongoose.Schema({
         type: String,
         require: true,
         trim: true,
-        enum: ['vivo', 'muerto', 'desconocido'] // Valores permitidos
+        enum: ['vivo', 'muerto', 'desconocido']
     },
     species: {
         type: String,
@@ -18,12 +18,7 @@ const charSchema = new mongoose.Schema({
         trim: true,
         enum: ['Humano', 'Alien', 'Robot'],
     },
-    // species: {
-    //     type: [String],
-    //     require: true,
-    //     trim: true,
-    //     enum: ['Humano', 'Alien', 'Robot'],
-    // },
+
     gender: {
         type: String,
         require: true,

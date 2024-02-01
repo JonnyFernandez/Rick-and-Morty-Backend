@@ -8,6 +8,7 @@ const transporter = require('../../utils/mailer')
 module.exports = {
     register: async (username, email, password) => {
         const userFound = await User.findOne({ email })
+
         if (userFound) throw new Error("the email already exist")
         const passwordHash = await bcrypt.hash(password, 10)
         const newUser = new User({ email, password: passwordHash, username })
@@ -15,15 +16,47 @@ module.exports = {
         //-----------------------------------------------------------------------------------
 
         await transporter.sendMail({
-            from: '"Welcome Lagartija" <arcancode@gmail.com>', // sender address
-            to: email, // list of receivers
-            subject: "Hello New User✔", // Subject line
-            // text: "Hello world?", // plain text body
+            from: '"Rick & Morty App" <arcancode@gmail.com>',
+            to: email,
+            subject: "¡Bienvenido a Rick & Morty App! ✔",
             html: `
-            <b>Hello world?</b>
-           
-            `, // html body
+                <html>
+                    <head>
+                        <style>
+                            body {
+                                font-family: 'Arial', sans-serif;
+                                background-color: #f0f0f0;
+                                color: #333;
+                            }
+                            .container {
+                                max-width: 600px;
+                                margin: 20px auto;
+                                padding: 20px;
+                                background-color: #fff;
+                                border-radius: 8px;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            }
+                            h1 {
+                                color: #4285f4;
+                            }
+                            p {
+                                line-height: 1.6;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <h1>¡Bienvenido a Rick & Morty App!</h1>
+                            <p>Hola,</p>
+                            <p>Estamos emocionados de tenerte como parte de nuestra comunidad. Explora nuestro universo de personajes y disfruta de todas las funcionalidades que ofrecemos.</p>
+                            <p>¡Gracias por unirte!</p>
+                            <p>Atentamente,<br>Jonny Fernandez (Full Stack Developer) <br> LinkedIn: ${"https://www.linkedin.com/in/jonathan-fernandez-65a959277/"} <br> Github: ${"https://github.com/JonnyFernandez"} <br> Portfolio: ${"https://portfolio-t79v.vercel.app/"} </p>
+                        </div>
+                    </body>
+                </html>
+            `,
         });
+
 
 
 
@@ -85,11 +118,4 @@ module.exports = {
         }
         return aux
     }
-
-
-
-
-
-
-
-}
+};

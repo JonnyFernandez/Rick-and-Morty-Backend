@@ -4,7 +4,29 @@ const validateSchema = require('../middlewares/validator.Middleware');
 const handler = require('../handlers/authHandler');
 const validateToken = require('../middlewares/validateToken');
 
+require('../schemas/auth.schema')
+
 const auth = Router();
+
+// Esquema para la validación del registro de usuario
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     registerSchema:
+ *       type: object
+ *       properties:
+ *         username:
+ *           type: string
+ *         password:
+ *           type: string
+ *         email:
+ *           type: string
+ *       required:
+ *         - email
+ *         - password
+ *         - username
+ */
 
 /**
  * @swagger
@@ -28,7 +50,7 @@ auth.post('/register', validateSchema(registerSchema), [handler.register]);
 
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Inicio de sesión
  *     description: Inicia sesión con las credenciales proporcionadas.
@@ -48,7 +70,7 @@ auth.post('/login', validateSchema(loginSchema), [handler.login]);
 
 /**
  * @swagger
- * /auth/logout:
+ * /api/auth/logout:
  *   post:
  *     summary: Cierre de sesión
  *     description: Cierra la sesión del usuario actual.
@@ -60,7 +82,7 @@ auth.post('/logout', [handler.logout]);
 
 /**
  * @swagger
- * /auth/profile:
+ * /api/auth/profile:
  *   get:
  *     summary: Perfil de usuario
  *     description: Obtiene el perfil del usuario autenticado.
@@ -74,7 +96,7 @@ auth.get('/profile', [validateToken.authRequire], [handler.profile]);
 
 /**
  * @swagger
- * /auth/verify:
+ * /api/auth/verify:
  *   get:
  *     summary: Verificación de token
  *     description: Verifica la validez del token de autenticación.

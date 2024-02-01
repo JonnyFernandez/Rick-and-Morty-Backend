@@ -6,3 +6,5 @@ const { PORT } = process.env
 connectDB()
 
 server.listen(PORT, () => console.log(`server on port ${PORT}`))
+
+console.log(`Swagger: http://localhost:3001/api-docs/`);

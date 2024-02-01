@@ -1,21 +1,89 @@
-const { Router } = require('express')
-const { registerSchema, loginSchema } = require('../schemas/auth.schema')
-const validateSchema = require('../middlewares/validator.Middleware')
-const handler = require('../handlers/authHandler')
-const validateToken = require('../middlewares/validateToken')
+const { Router } = require('express');
+const { registerSchema, loginSchema } = require('../schemas/auth.schema');
+const validateSchema = require('../middlewares/validator.Middleware');
+const handler = require('../handlers/authHandler');
+const validateToken = require('../middlewares/validateToken');
 
+const auth = Router();
 
-const auth = Router()
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Registro de usuario
+ *     description: Crea un nuevo usuario en el sistema.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/registerSchema'
+ *     responses:
+ *       200:
+ *         description: Usuario registrado exitosamente
+ *       400:
+ *         description: Error en la solicitud o usuario ya existente
+ */
+auth.post('/register', validateSchema(registerSchema), [handler.register]);
 
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Inicio de sesión
+ *     description: Inicia sesión con las credenciales proporcionadas.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/loginSchema'
+ *     responses:
+ *       200:
+ *         description: Inicio de sesión exitoso
+ *       401:
+ *         description: Credenciales inválidas
+ */
+auth.post('/login', validateSchema(loginSchema), [handler.login]);
 
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Cierre de sesión
+ *     description: Cierra la sesión del usuario actual.
+ *     responses:
+ *       200:
+ *         description: Sesión cerrada exitosamente
+ */
+auth.post('/logout', [handler.logout]);
 
-auth.post('/register', validateSchema(registerSchema), [handler.register])
-auth.post('/login', validateSchema(loginSchema), [handler.login])
-auth.post('/loguot', [handler.logout])
-auth.get('/profile', [validateToken.authRequire], [handler.profile])
-auth.get('/verify', [handler.verifyToken])
+/**
+ * @swagger
+ * /auth/profile:
+ *   get:
+ *     summary: Perfil de usuario
+ *     description: Obtiene el perfil del usuario autenticado.
+ *     responses:
+ *       200:
+ *         description: Perfil del usuario obtenido exitosamente
+ *       401:
+ *         description: No autorizado (Token no válido)
+ */
+auth.get('/profile', [validateToken.authRequire], [handler.profile]);
 
-
-
+/**
+ * @swagger
+ * /auth/verify:
+ *   get:
+ *     summary: Verificación de token
+ *     description: Verifica la validez del token de autenticación.
+ *     responses:
+ *       200:
+ *         description: Token válido
+ *       401:
+ *         description: Token no válido
+ */
+auth.get('/verify', [handler.verifyToken]);
 
 module.exports = auth;

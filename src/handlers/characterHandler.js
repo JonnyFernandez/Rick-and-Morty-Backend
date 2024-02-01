@@ -73,5 +73,32 @@ module.exports = {
         } catch (error) {
             res.status(400).json({ message: error.message })
         }
+    },
+    fav: async (req, res) => {
+        try {
+            const { idChar, name, status, species, gender, origin, image } = req.body
+
+            const newFav = await control.fav(idChar, name, status, species, gender, origin, image, req.user.id)
+            res.status(200).json(newFav)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    getFav: async (req, res) => {
+        try {
+            const aux = await control.getFav(req.user.id)
+            res.status(200).json(aux)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    removeFav: async (req, res) => {
+        const { id } = req.params
+        try {
+            const remove = await control.deleteFav(id, req.user.id)
+            res.status(200).json(remove)
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
     }
 };

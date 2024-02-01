@@ -126,6 +126,9 @@ Lo primero es registrarse, ya que todas las rutas son protegidas y solo los usua
 
 -  Solo podras eliminar personajes que tu hayas creado.
 
+#### **📍 GET | http://localhost:3001/api/char/mychar**
+
+-  Obtener un arreglo con todos los personajes que creaste.
 
 
 

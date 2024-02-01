@@ -8,6 +8,7 @@ const createAccesToken = (payload) => {
         jwt.sign(
             payload,
             TOKEN_SECRET,
+            // { expiresIn: "1m" },
             { expiresIn: "1d" },
             (error, token) => {
                 if (error) reject(error)

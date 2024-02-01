@@ -1,5 +1,6 @@
 const axios = require('axios')
 const Char = require('../models/char.model')
+const Fav = require('../models/fav.model')
 const { ObjectId } = require('mongodb');
 
 module.exports = {
@@ -201,6 +202,49 @@ module.exports = {
                 user: item.user ? item.user._id : null
             }
         });
+    },
+    fav: async (idChar, name, status, species, gender, origin, image, user) => {
+        const favFound = await Fav.findOne({ idChar });
+        if (favFound) return "chacarter is in fav"
+
+        const newFav = new Fav({ idChar, name, status, species, gender, origin, image, user })
+        const saveFav = await newFav.save()
+        return saveFav;
+    },
+    getFav: async (userId) => {
+        const myFav = await Fav.find({ user: userId }).populate('user')
+        return myFav.map(item => {
+            return {
+                id: item._id,
+                idChar: item.idChar,
+                name: item.name,
+                status: item.status,
+                species: item.species,
+                gender: item.gender,
+                origin: item.origin,
+                image: item.image
+            }
+        })
+    },
+    deleteFav: async (id, userId) => {
+        if (isNaN(id)) {
+            const fav = await Fav.findById(id);
+            if (!fav) throw new Error('character not exist')
+            const userObjectId = new ObjectId(userId);
+            const idString = fav.user;
+
+            if (userObjectId.equals(idString)) {
+                const fav = await Fav.findByIdAndDelete(id);
+                if (!fav) {
+                    throw new Error('Character not found');
+                }
+                return `${fav.name} removed`;
+            } else {
+                throw new Error('You did not create this favorite, so you cannot remove it.');
+            }
+        } else {
+            throw new Error('You cannot delete favorite that you did not create.');
+        }
     }
 };
 

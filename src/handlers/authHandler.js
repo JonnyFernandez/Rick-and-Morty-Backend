@@ -9,10 +9,10 @@ module.exports = {
             const aux = await auth.register(username, email, password)
             const token = await createAccesToken({ id: aux.id })
             res.cookie('token', token)
-            res.status(201).json(aux)
+            res.status(200).json(aux)
 
         } catch (error) {
-            res.status(500).json({ message: [error.message] })
+            res.status(409).json({ message: [error.message] })
         }
     },
     login: async (req, res) => {
@@ -23,7 +23,7 @@ module.exports = {
             res.cookie('token', token)
             res.status(201).json(aux)
         } catch (error) {
-            res.status(500).json({ error: error.message })
+            res.status(401).json({ error: error.message })
         }
     },
     logout: (req, res) => {
@@ -35,9 +35,9 @@ module.exports = {
     profile: async (req, res) => {
         try {
             const aux = await auth.profile(req.user.id)
-            return res.status(201).json(aux)
+            return res.status(200).json(aux)
         } catch (error) {
-            return res.status(400).json({ message: "problem wit your profile" })
+            return res.status(500).json({ message: "problem wit your profile" })
         }
     },
     verifyToken: async (req, res) => {

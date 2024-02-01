@@ -50,6 +50,22 @@ auth.post('/register', validateSchema(registerSchema), [handler.register]);
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     loginSchema:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *       required:
+ *         - email
+ *         - password 
+ */
+
+/**
+ * @swagger
  * /api/auth/login:
  *   post:
  *     summary: Inicio de sesión

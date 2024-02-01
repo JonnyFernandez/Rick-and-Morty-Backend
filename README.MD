@@ -4,7 +4,7 @@
 
 ## ✅ DOCUMENTACIÓN
 
-Esta API fue creada con el propósito de ayudar a los desarrolladores junior a entender la lógica y modularización en el backend. Se trabajó con **JavaScript**, **Express**, **Node.js**, **MongoDB**, **Mongoose**, **Cookies** y **JsonWebToken**. Es una API fácil de usar, ideal para aquellos que están aprendiendo en el frontend.
+Esta API fue creada con el propósito de ayudar a los desarrolladores junior a entender la lógica y modularización en el backend. Se trabajó con **JavaScript**, **Express**, **Node.js**, **MongoDB**, **Mongoose**, **Cookies**, **JsonWebToken** y **Nodemailer**. Es una API fácil de usar, ideal para aquellos que están aprendiendo en el frontend.
 
 **Nota:** Es necesario tener instalado MongoDB de forma local en tu ordenador. Puedes seguir [este tutorial](https://www.youtube.com/watch?v=lWMemPN9t6Q) para instalarlo.
 
@@ -29,7 +29,7 @@ Lo primero es registrarse, ya que todas las rutas son protegidas y solo los usua
 ### Registrar: POST | http://localhost:3001/api/auth/register
 
 **Enviando por body:**
-```json
+```
 {
   "email": "code@gmail.com",
   "password": "122583",
@@ -37,13 +37,12 @@ Lo primero es registrarse, ya que todas las rutas son protegidas y solo los usua
 }
 
  ```
- **En caso de que ya exista, se devolverá:**
+ - **En caso de que ya exista, se devolverá:**
   ``` 
-{
-  "message": ["the email already exist"]
-}
-
+{ "message": ["the email already exist"] }
  ```
+- **Una vez registrado, te llegara un mensaje de bienvenida al email con el que te registraste**
+
 
  ### Login : **POST |  http://localhost:3001/api/auth/login**  </br>
  **Enviando por body:**
@@ -130,6 +129,11 @@ Lo primero es registrarse, ya que todas las rutas son protegidas y solo los usua
 
 -  Obtener un arreglo con todos los personajes que creaste.
 
+## **Favoritos**
+
+#### **📍 POST | http://localhost:3001/api/char/favorite**
+#### **📍 GET | http://localhost:3001/api/char/favorite**
+#### **📍 DELETE | http://localhost:3001/api/char/favorite/:id**
 
 
 
@@ -140,18 +144,19 @@ Lo primero es registrarse, ya que todas las rutas son protegidas y solo los usua
 
 <div class="hide">
 
-- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
-- [cookie-parser](https://www.npmjs.com/package/cookie-parser)
-- [cors](https://www.npmjs.com/package/cors)
-- [dotenv](https://www.npmjs.com/package/dotenv)
-- [express](https://expressjs.com/)
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-- [mongoose](https://mongoosejs.com/)
-- [morgan](https://www.npmjs.com/package/morgan)
-- [nodemon](https://www.npmjs.com/package/nodemon)
-- [zod](https://www.npmjs.com/package/zod)
-- [jest](https://jestjs.io/docs/getting-started)
-- [supertest](https://www.npmjs.com/package/supertest)
+- [Bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [Cookie-parser](https://www.npmjs.com/package/cookie-parser)
+- [Cors](https://www.npmjs.com/package/cors)
+- [Dotenv](https://www.npmjs.com/package/dotenv)
+- [Express](https://expressjs.com/)
+- [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [Mongoose](https://mongoosejs.com/)
+- [Morgan](https://www.npmjs.com/package/morgan)
+- [Nodemon](https://www.npmjs.com/package/nodemon)
+- [Zod](https://www.npmjs.com/package/zod)
+- [Jest](https://jestjs.io/docs/getting-started)
+- [Supertest](https://www.npmjs.com/package/supertest)
+- [Nodemailer](https://nodemailer.com/)
 
 
 </div>

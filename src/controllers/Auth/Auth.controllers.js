@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const { TOKEN_SECRET } = process.env
+const transporter = require('../../utils/mailer')
 
 module.exports = {
     register: async (username, email, password) => {
@@ -11,6 +12,23 @@ module.exports = {
         const passwordHash = await bcrypt.hash(password, 10)
         const newUser = new User({ email, password: passwordHash, username })
         const savedUser = await newUser.save()
+        //-----------------------------------------------------------------------------------
+
+        await transporter.sendMail({
+            from: '"Welcome Lagartija" <arcancode@gmail.com>', // sender address
+            to: email, // list of receivers
+            subject: "Hello New User✔", // Subject line
+            // text: "Hello world?", // plain text body
+            html: `
+            <b>Hello world?</b>
+           
+            `, // html body
+        });
+
+
+
+
+        //-----------------------------------------------------------------------------------
         return {
             id: savedUser._id,
             email: savedUser.email,

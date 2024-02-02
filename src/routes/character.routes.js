@@ -9,7 +9,7 @@ const character = Router()
 
 
 
-// -----------------------------POST----------------------------------------------------------
+// -----------------------------POST-CHAR----------------------------------------------------------
 // Esquema para la validación creacion de personajes
 /**
  * @swagger
@@ -58,6 +58,8 @@ const character = Router()
  */
 character.post('/', [validateToken.authRequire], validateSchema(postCharSchema), [charHandler.createChar])
 
+
+// -----------------------------GET-CHAR----------------------------------------------------------
 /**
  * @swagger
  * /api/char:
@@ -71,6 +73,29 @@ character.post('/', [validateToken.authRequire], validateSchema(postCharSchema),
  *         description: No autorizado (Token no válido)
  */
 character.get('/', [validateToken.authRequire], [charHandler.getChar]);
+
+// -----------------------------GET-CHAR-BY-ID----------------------------------------------------------
+/**
+ * @swagger
+ * /api/char/{id}:
+ *   get:
+ *     summary: Obtener personaje por su id
+ *     description: Obtener personaje por su id.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: Identificador del personaje (puede ser número entero o cadena)
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Personaje obtenido exitosamente
+ *       401:
+ *         description: No autorizado (Token no válido)
+ */
+
+character.get('/:id', [validateToken.authRequire], [charHandler.getCharById])
 
 /**
  * @swagger
@@ -97,7 +122,7 @@ character.get('/random', [validateToken.authRequire], [charHandler.random])
 character.post('/favorite', [validateToken.authRequire], [charHandler.fav])
 character.get('/favorite', [validateToken.authRequire], [charHandler.getFav])
 character.delete('/favorite/:id', [validateToken.authRequire], [charHandler.removeFav])
-character.get('/:id', [validateToken.authRequire], [charHandler.getCharById])
+
 character.put('/:id', [validateToken.authRequire], [charHandler.updateChar])
 
 character.delete('/:id', [validateToken.authRequire], [charHandler.removeChar])

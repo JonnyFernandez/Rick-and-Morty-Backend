@@ -97,16 +97,17 @@ character.get('/', [validateToken.authRequire], [charHandler.getChar]);
 
 character.get('/:id', [validateToken.authRequire], [charHandler.getCharById])
 
+// -----------------------------PAGINATE----------------------------------------------------------
 /**
  * @swagger
- * /characters/paginate/{id}:
+ * /api/char/paginate/{id}:
  *   get:
- *     summary: Obtener personajes paginados
+ *     summary: Obtener paginados de 20 personajes por pagina
  *     description: Obtiene una página específica de personajes.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: Número de página
+ *         description: Número de página debe ser un numero entero (1 - 42)
  *         required: true
  *         schema:
  *           type: integer
@@ -117,6 +118,9 @@ character.get('/:id', [validateToken.authRequire], [charHandler.getCharById])
  *         description: No autorizado (Token no válido)
  */
 character.get('/paginate/:id', [validateToken.authRequire], [charHandler.paginate])
+
+
+
 character.get('/mychar', [validateToken.authRequire], [charHandler.myChar])
 character.get('/random', [validateToken.authRequire], [charHandler.random])
 character.post('/favorite', [validateToken.authRequire], [charHandler.fav])

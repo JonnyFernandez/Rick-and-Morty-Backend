@@ -7,6 +7,57 @@ const character = Router()
 
 
 
+
+
+// -----------------------------POST----------------------------------------------------------
+// Esquema para la validación creacion de personajes
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     postCharSchema:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         status:
+ *           type: string
+ *         species:
+ *           type: string
+ *         gender:
+ *           type: string
+ *         origin:
+ *           type: string
+ *         image:
+ *           type: string
+ *       required:
+ *         - name
+ *         - status
+ *         - species
+ *         - gender
+ *         - origin
+ *         - image
+ */
+/**
+ * @swagger
+ * /api/char:
+ *   post:
+ *     summary: Crear personaje
+ *     description: Crea un nuevo usuario en el sistema.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/postCharSchema'
+ *     responses:
+ *       200:
+ *         description: Usuario registrado exitosamente
+ *       400:
+ *         description: Error en la solicitud o usuario ya existente
+ */
+character.post('/', [validateToken.authRequire], validateSchema(postCharSchema), [charHandler.createChar])
+
 /**
  * @swagger
  * /api/char:
@@ -48,7 +99,7 @@ character.get('/favorite', [validateToken.authRequire], [charHandler.getFav])
 character.delete('/favorite/:id', [validateToken.authRequire], [charHandler.removeFav])
 character.get('/:id', [validateToken.authRequire], [charHandler.getCharById])
 character.put('/:id', [validateToken.authRequire], [charHandler.updateChar])
-character.post('/', [validateToken.authRequire], validateSchema(postCharSchema), [charHandler.createChar])
+
 character.delete('/:id', [validateToken.authRequire], [charHandler.removeChar])
 
 

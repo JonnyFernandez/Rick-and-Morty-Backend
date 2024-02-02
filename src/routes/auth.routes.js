@@ -122,6 +122,6 @@ auth.get('/profile', [validateToken.authRequire], [handler.profile]);
  *       401:
  *         description: Token no válido
  */
-auth.get('/verify', [handler.verifyToken]);
+auth.get('/verify', [validateToken.authRequire], [handler.verifyToken]);
 
 module.exports = auth;

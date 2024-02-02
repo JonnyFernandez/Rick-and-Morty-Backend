@@ -87,6 +87,7 @@ module.exports = {
 
     },
     profile: async (id) => {
+
         const userFound = await User.findById(id);
         if (!userFound) throw new Error('user not found')
 
@@ -98,24 +99,13 @@ module.exports = {
             updatedAt: userFound.updatedAt
         }
     },
-    verifyToken: async (token) => {
+    verifyToken: async (id) => {
 
-
-
-        jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-            if (err) throw new Error("Unauthorized/token expired")
-
-            const userFound = await User.findById(user.id)
-            if (!userFound) throw new Error("Unauthorized/user not found")
-
-
-
-        });
-        let aux = {
+        const userFound = await User.findById(id)
+        return {
             id: userFound._id,
             username: userFound.username,
             email: userFound.email
         }
-        return aux
     }
 };

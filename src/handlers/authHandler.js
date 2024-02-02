@@ -41,10 +41,9 @@ module.exports = {
         }
     },
     verifyToken: async (req, res) => {
-        const { token } = req.cookies
-        if (!token) return res.status(401).json({ message: "Unauthorized/not cookie" })
+        // const { token } = req.cookies
         try {
-            const aux = await auth.verifyToken(token)
+            const aux = await auth.verifyToken(req.user.id)
             res.status(200).json(aux)
         } catch (error) {
             res.status(500).json({ error: error.message })

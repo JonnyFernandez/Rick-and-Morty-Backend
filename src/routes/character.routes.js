@@ -121,15 +121,9 @@ character.get('/paginate/:id', [validateToken.authRequire], [charHandler.paginat
 
 
 
-character.get('/mychar', [validateToken.authRequire], [charHandler.myChar])
-character.get('/random', [validateToken.authRequire], [charHandler.random])
-character.post('/favorite', [validateToken.authRequire], [charHandler.fav])
-character.get('/favorite', [validateToken.authRequire], [charHandler.getFav])
-character.delete('/favorite/:id', [validateToken.authRequire], [charHandler.removeFav])
 
-character.put('/:id', [validateToken.authRequire], [charHandler.updateChar])
 
-character.delete('/:id', [validateToken.authRequire], [charHandler.removeChar])
+
 
 
 

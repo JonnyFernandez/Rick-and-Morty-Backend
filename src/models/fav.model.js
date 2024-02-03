@@ -1,11 +1,7 @@
 const mongoose = require('mongoose')
 
 const favSchema = new mongoose.Schema({
-    idChar: {
-        type: String,
-        require: true,
-        trim: true
-    },
+
     name: {
         type: String,
         require: true,
@@ -39,11 +35,16 @@ const favSchema = new mongoose.Schema({
         require: true,
         trim: true
     },
+    code: {
+        type: String,
+        require: true,
+        trim: true
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
-    }
+    },
 }, { timestamps: true })
 
 

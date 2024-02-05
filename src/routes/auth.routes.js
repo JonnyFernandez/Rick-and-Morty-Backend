@@ -16,11 +16,11 @@ const auth = Router();
  *     registerSchema:
  *       type: object
  *       properties:
- *         username:
+ *         email:
  *           type: string
  *         password:
  *           type: string
- *         email:
+ *         username:
  *           type: string
  *       required:
  *         - email

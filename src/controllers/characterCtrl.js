@@ -104,6 +104,7 @@ module.exports = {
         return saveChar;
     },
     update_character: async (id, data, userId) => {
+        // console.log(data);
         if (isNaN(id)) {
             const auxFound = await Char.findById(id);
             if (!auxFound) throw new Error('character not exist')
@@ -115,7 +116,7 @@ module.exports = {
                 if (!char) {
                     throw new Error('Character not found');
                 }
-                return char;
+                return "Character updated";
             } else {
                 throw new Error('You did not create this character, so you cannot update it.');
             }
@@ -164,6 +165,7 @@ module.exports = {
     },
     db: async (userId) => {
         const res = await Char.find({ user: userId }).populate('user')
+        if (res.length < 1) return "Empty DB"
         return res.map(item => {
             return {
                 id: item._id,

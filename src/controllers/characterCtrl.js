@@ -205,26 +205,29 @@ module.exports = {
             }
         });
     },
-    fav: async (idChar, name, status, species, gender, origin, image, user) => {
-        const favFound = await Fav.findOne({ idChar });
-        if (favFound) return "chacarter is in fav"
+    fav: async (name, status, species, gender, origin, image, code, user) => {
 
-        const newFav = new Fav({ idChar, name, status, species, gender, origin, image, user })
+        const favFound = await Fav.findOne({ code });
+
+        if (favFound) throw new Error("character is already a favorite")
+        const newFav = new Fav({ name, status, species, gender, origin, image, code, user })
         const saveFav = await newFav.save()
         return saveFav;
     },
+
     getFav: async (userId) => {
         const myFav = await Fav.find({ user: userId }).populate('user')
+        if (myFav.length < 1) throw new Error("you don't have favorite characters")
         return myFav.map(item => {
             return {
                 id: item._id,
-                idChar: item.idChar,
                 name: item.name,
                 status: item.status,
                 species: item.species,
                 gender: item.gender,
                 origin: item.origin,
-                image: item.image
+                image: item.image,
+                code: item.code,
             }
         })
     },

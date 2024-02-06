@@ -43,7 +43,7 @@ const character = Router()
  * /api/char:
  *   post:
  *     summary: Crear personaje
- *     description: Crea un nuevo usuario en el sistema.
+ *     description: Crea un nuevo personaje.
  *     requestBody:
  *       required: true
  *       content:

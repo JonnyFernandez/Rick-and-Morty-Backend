@@ -10,7 +10,7 @@ module.exports = {
             const char = await control.getChar(name, req.user.id)
             res.status(200).json(char)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     getCharById: async (req, res) => {
@@ -19,7 +19,7 @@ module.exports = {
             let charID = await control.getChar_by_id(id, req.user.id)
             res.status(200).json(charID)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     createChar: async (req, res) => {
@@ -29,16 +29,17 @@ module.exports = {
             let charCreate = await control.postChar(name, status, species, gender, origin, image, user)
             res.status(200).json(charCreate)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     updateChar: async (req, res) => {
         const { id } = req.params;
+        console.log(req.body);
         try {
             let charUpdate = await control.update_character(id, req.body, req.user.id)
             res.status(200).json(charUpdate)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     removeChar: async (req, res) => {
@@ -47,7 +48,7 @@ module.exports = {
             let charUpdate = await control.remove(id, req.user.id)
             res.status(200).json(charUpdate)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     paginate: async (req, res) => {
@@ -55,7 +56,7 @@ module.exports = {
             const aux = await control.paginate(req.params.id)
             res.status(200).json(aux)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     myChar: async (req, res) => {
@@ -63,7 +64,7 @@ module.exports = {
             const aux = await control.db(req.user.id)
             res.status(200).json(aux)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     random: async (req, res) => {
@@ -71,17 +72,17 @@ module.exports = {
             const randomChar = await control.random(req.user.id)
             res.status(200).json(randomChar)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     fav: async (req, res) => {
         try {
-            const { idChar, name, status, species, gender, origin, image } = req.body
+            const { name, status, species, gender, origin, image, code } = req.body
 
-            const newFav = await control.fav(idChar, name, status, species, gender, origin, image, req.user.id)
+            const newFav = await control.fav(name, status, species, gender, origin, image, code, req.user.id)
             res.status(200).json(newFav)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     getFav: async (req, res) => {
@@ -89,7 +90,7 @@ module.exports = {
             const aux = await control.getFav(req.user.id)
             res.status(200).json(aux)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     },
     removeFav: async (req, res) => {
@@ -98,7 +99,7 @@ module.exports = {
             const remove = await control.deleteFav(id, req.user.id)
             res.status(200).json(remove)
         } catch (error) {
-            res.status(400).json({ message: error.message })
+            res.status(400).json({ message: [error.message] })
         }
     }
 };

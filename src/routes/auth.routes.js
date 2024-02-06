@@ -33,7 +33,7 @@ const auth = Router();
  * /api/auth/register:
  *   post:
  *     summary: Registro de usuario
- *     description: Crea un nuevo usuario en el sistema.
+ *     description: Crea un nuevo usuario en la DB.
  *     requestBody:
  *       required: true
  *       content:
@@ -69,7 +69,7 @@ auth.post('/register', validateSchema(registerSchema), [handler.register]);
  * /api/auth/login:
  *   post:
  *     summary: Inicio de sesión
- *     description: Inicia sesión con las credenciales proporcionadas.
+ *     description: Inicia sesión con las credenciales proporcionadas en el registro de usuarios.
  *     requestBody:
  *       required: true
  *       content:

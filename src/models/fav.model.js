@@ -11,7 +11,7 @@ const favSchema = new mongoose.Schema({
         type: String,
         require: true,
         trim: true,
-        enum: ['vivo', 'muerto', 'desconocido']
+        enum: ['Vivo', 'Muerto', 'Unknow']
     },
     species: {
         type: String,
